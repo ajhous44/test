@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .primary-color, .secondary-color {
+            color: #fff;
+        }
+
+        .primary-color {
+            background-color: #001f3f;
+        }
+
+        .secondary-color {
+            background-color: #d9534f;
+        }
+
+        .card {
+            border-radius: 10px;
+        }
+        
+        .sidebar {
+            background-color: #013060;
+            height: 100vh;
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 250px;
+            padding: 20px;
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 56px;
+            padding: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .sidebar.collapsed ul li a {
+            visibility: hidden;
+            display: inline-block;
+        }
+
+        .sidebar.collapsed ul li a i {
+            visibility: visible;
+        }
+        
+        .dropdown-menu {
+            background-color: #f8f9fa;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .dropdown-item {
+            color: #000;
+        }
+
+        .container {
+            transition: margin-left 0.3s, width 0.3s;
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            max-width: 100%;
+        }
+
+        .overlay {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .container {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .overlay {
+                display: none;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.841);
+                z-index: 9999;
+            }
+
+            .overlay.show {
+                display: flex;
+            }
+
+            .overlay-message {
+                color: #fff;
+                font-size: 24px;
+                text-align: center;
+                padding: 10%;
+            }
+
+            .sidebar {
+                width: 0;
+                padding: 0;
+                overflow: hidden;
+                transition: width 0.3s;
+            }
+        }
+
+        .sidebar-toggle-btn {
+            display: block;
+            position: fixed;
+            bottom: 10px;
+            left: calc(250px - 50px);
+            border: none;
+            background: #013060;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .card {
+            margin-bottom: 15px; /* Adjust this value as needed */
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Menu 1
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Submenu 1</a></li>
+                        <li><a class="dropdown-item" href="#">Submenu 2</a></li>
+                        <li><a class="dropdown-item" href="#">Submenu 3</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Menu 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Menu 3</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#"><i class="bi bi-house-door-fill"></i> Sidebar Item 1</a></li>
+            <li><a href="#"><i class="bi bi-speedometer2"></i> Sidebar Item 2</a></li>
+            <li><a href="#"><i class="bi bi-gear-fill"></i> Sidebar Item 3</a></li>
+        </ul>
+        <button class="sidebar-toggle-btn">
+        <span class="caret-icon">&gt;</span> <!-- Caret icon for toggling -->
+    </button>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card primary-color">
+                    <div class="card-body">
+                        <h5 class="card-title">Card 1</h5>
+                        <p class="card-text">Dummy data here</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"> <!-- BEGIN: Modified card width -->
+                <div class="card secondary-color">
+                    <div class="card-body">
+                        <h5 class="card-title">Card 2</h5>
+                        <p class="card-text">Dummy data here</p>
+                    </div>
+                </div>
+            </div> <!-- END: Modified card width -->
+            <div class="col-md-4">
+                <div class="card primary-color">
+                    <div class="card-body">
+                        <h5 class="card-title">Card 3</h5>
+                        <p class="card-text">Dummy data here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas> <!-- Chart Container -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Blank Box Container -->
+                <div class="card">
+                    <div class="card-body">
+                        <p>Blank Box</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay">
+        <div class="overlay-message">
+            Woah there, this isn't responsive yet... relax, it's a proof of concept! Please expand your window
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to toggle overlay based on window width
+        function toggleOverlay() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.overlay').classList.add('show');
+            } else {
+                document.querySelector('.overlay').classList.remove('show');
+            }
+        }
+
+        // Event listener for resize
+        window.addEventListener('resize', toggleOverlay);
+
+        // Initial check on page load
+        toggleOverlay(); // Call this function on page load to check the initial state
+        
+        // Function to toggle sidebar collapse
+        function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const container = document.querySelector('.container');
+    const caretIcon = document.querySelector('.caret-icon');
+    const toggleBtn = document.querySelector('.sidebar-toggle-btn');
+
+    sidebar.classList.toggle('collapsed');
+
+    if (sidebar.classList.contains('collapsed')) {
+        sidebar.style.width = '56px';
+        container.style.marginLeft = '56px';
+        container.style.width = 'calc(100% - 56px)'; // Adjust container width
+        caretIcon.innerHTML = "&lt;"; // Change icon to '<' when collapsed
+        toggleBtn.style.left = '10px'; // Adjust button position when collapsed
+    } else {
+        sidebar.style.width = '250px';
+        container.style.marginLeft = '250px';
+        container.style.width = 'calc(100% - 250px)'; // Reset container width
+        caretIcon.innerHTML = "&gt;"; // Change icon to '>' when expanded
+        toggleBtn.style.left = 'calc(250px - 50px)'; // Adjust button position when expanded
+    }
+}
+
+
+
+        // Bind the sidebar toggle function to the sidebar toggle button
+        document.querySelector('.sidebar-toggle-btn').addEventListener('click', toggleSidebar);
+        
+        // Event listener for sidebar toggle
+        document.querySelector('.navbar-toggler').addEventListener('click', toggleSidebar);
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line', // Example: Line chart
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Fake Data',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
